@@ -28,6 +28,18 @@ active_titles = ratings_by_title[ratings_by_title>=250]
 mean_ratings = mean_ratings.ix[active_titles]
 # 找出女性观众最喜欢的电影
 top_female_ratings = mean_ratings.sort_index(by='F', ascending=False)
+# 找出男性和女性观众分歧最大的电影
+mean_ratings['diff'] = mean_ratings['M'] - mean_ratings['F']
+sorted_by_diff = mean_ratings.sort_index(by='diff')
+
+## 找出分歧最大的电影
+# 根据电影名称分组的得分数据的标准差
+rating_std_by_title = data.groupby('title')['rating'].std()
+# 根据active_titles进行过滤
+rating_std_by_title = rating_std_by_title.ix[active_titles]
+# 根据值对Series进行降序排列
+#rating_std_by_title = rating_std_by_title.order(ascending='True')
+
 
 print('合并数据表：')
 #print(data)
@@ -43,3 +55,9 @@ print('mean_ratings[:5]------')
 print(mean_ratings[:5])
 print('top_female_ratings[:10]------')
 print(top_female_ratings[:10])
+print('sorted_by_diff[:15]------')
+print(sorted_by_diff[:15])
+
+print('找出分歧最大的电影：')
+print('rating_std_by_title------')
+print(rating_std_by_title[:10])
