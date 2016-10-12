@@ -71,7 +71,16 @@ letter_prop = table/table.sum().astype(float)
 dny_ts = letter_prop.ix[['d', 'n', 'y'], 'M'].T
 
 # 绘制出dny_ts的图
-dny_ts.plot()
+# dny_ts.plot()
+
+## 变成女孩名字的男孩名字
+all_names = top1000.name.unique()
+mask = np.array(['lesl' in x.lower() for x in all_names])
+lesley_like = all_names[mask]
+filtered = top1000[top1000.name.isin(lesley_like)]
+filtered_by_name = filtered.groupby('name').births.sum()
+table = filtered.pivot_table('births', index='year', columns='sex', aggfunc=sum)
+
 
 print('读取数据：')
 print(names_1880[:5])
@@ -98,4 +107,8 @@ print(subtable.sum())
 print(letter_prop.head())
 #print(plt.show())
 print(dny_ts.head())
-print(plt.show())
+#print(plt.show())
+print('变成女孩名字的男孩名字：')
+print(lesley_like)
+print(filtered_by_name)
+print(table.tail())
