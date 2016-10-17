@@ -15,5 +15,9 @@ if __name__ == '__main__':
     print(y)
     print(np.maximum(x, y))  # 元素级最大值
 
-    arr = np.random.randn(7) * 5
-    print(np.modf(arr))
+    arr = np.random.randn(7) *5
+    print(arr)
+    arrModf = np.modf(arr)
+    print(arrModf)
+    print(arrModf[0])
+    print(arrModf[1])
