@@ -83,3 +83,62 @@ if __name__ == '__main__':
     print(arr[5:8])
     arr[5:8] = 12
     print(arr)
+
+    arr2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    print(arr2d[2])
+    print(arr2d[0][2])
+    print(arr2d[0, 2])
+
+    print('切片索引：')
+    print(arr[1:6])
+    print(arr2d[0:2])
+    print(arr2d[:2, 1:])
+    print(arr2d[1, :2])
+    print(arr2d[2, :1])
+    print(arr2d[:, :1])
+
+    print('布尔型索引：')
+    names = np.array(['bob', 'joe', 'will', 'bob', 'will', 'joe', 'joe'])
+    data = np.random.randn(7, 4)
+    print(names)
+    print(data)
+    print(names == 'bob')
+    print(data[names == 'bob'])
+    print(data[names == 'bob', 2:])
+    print(names != 'bob')
+    print(-(names == 'bob'))
+    print(data[-(names == 'bob')])
+    mask = (names == 'bob') | (names == 'will')
+    print(mask)
+    print(data[mask])
+    data[data < 0] = 0
+    print(data)
+    data[names != 'joe'] = 7
+    print(data)
+
+    print('花式索引：')
+    arr = np.empty((8, 4))
+    print(arr)
+    for i in range(8):
+        arr[i] = i
+    print(arr)
+    print(arr[[4, 3, 0, 6]])
+    print(arr[[-3, -5, -7]])
+    arr = np.arange(32).reshape((8,4))
+    print(arr)
+    print(arr[[1, 5, 7, 2], [0, 3, 1, 2]])
+    print(arr[:, [3, 0]])
+    print(arr[[1, 5, 7, 2]][:, [0, 3, 1, 2]])
+
+    print('数组转置和轴对换：')
+    arr = np.arange(15).reshape((3, 5))
+    print(arr)
+    print(arr.T)
+    print(arr)
+    arr = np.random.randn(6, 3)
+    print(np.dot(arr.T, arr))
+
+    arr = np.arange(16).reshape((2, 2, 4))
+    print(arr)
+    print(arr.T)
+    print(arr.swapaxes(1, 2))
