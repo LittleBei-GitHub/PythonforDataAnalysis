@@ -50,3 +50,33 @@ if __name__ == '__main__':
     arr = np.array([[0, 1, 2], [3, 4, 5], [6, 7, 8]])
     print(arr.cumsum(0)) # 累加
     print(arr.cumprod(1)) # 累积
+
+    print('用于布尔数组的方法：')
+    arr = np.random.randn(100)
+    print((arr>0).sum()) # 统计数组arr中大于0的元素的个数
+
+    bools = np.array([False, False, True, False])
+    print(bools.any()) # any用于测试数组中是否存在一个或多个True
+    print(bools.all()) # all用于检测数组中所有值是否都是True
+
+    print('排序：')
+    arr = np.random.randn(8)
+    print(arr)
+    print(np.sort(arr))           # np.sort() 对数组排序返回的是数组的副本
+    arr= np.random.randn(5,4)
+    print(arr)
+    print(np.sort(arr, axis=1))
+    print(arr)
+
+    print('唯一化以及其他的集合逻辑：')
+    names = np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe'])
+    nuNames = np.unique(names)  # np.unique() 用于找出数组中的唯一值并返回已经排序的结果
+    print(nuNames)
+
+    ints = np.array([3, 2, 1, 4, 3, 2])
+    unInts = np.unique(ints)
+    print(unInts)
+
+    values = np.array([6, 0, 0, 3, 2, 5, 6])
+    print(np.in1d(values, [2, 3, 6]))
+    print(np.intersect1d(values, [2, 3, 6]))
