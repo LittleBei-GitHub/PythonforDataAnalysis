@@ -152,4 +152,80 @@ if __name__ == '__main__':
     series3 = frame['d']
     print(frame)
     print(series3)
-    print(frame.sub(series3, axis=0)) # 匹配行在列上广播
+    print(frame.sub(series3, axis=0)) # 匹配行在列上广播,必须使用算术运算方法
+
+    ## 函数应用和映射
+    frame = DataFrame(np.random.randn(4, 3),
+                      columns=list('bde'),
+                      index=['Utah', 'Ohio', 'Texas', 'Oregon'])
+    print(frame)
+    print(np.abs(frame)) # numpy的通用方法
+    f = lambda x : x.max() - x.min()
+
+    # 数组级的
+    print(frame.apply(f)) # DataFrame的apply方法
+    print(frame.apply(f, axis=1))
+    def f(x):
+        return Series([x.min(), x.max()], index=['min', 'max'])
+    print(frame.apply(f))
+
+    # 元素级的
+    format = lambda x : '%.2f' % x
+    print(frame.applymap(format)) # DataFrame的applymap方法
+
+    # Series元素级
+    print(frame['e'].map(format))
+
+    ## 排名和排序
+    #排序
+    # Series
+    obj = Series(range(4), index=['d', 'a', 'b', 'c'])
+    print(obj.sort_index())
+
+    obj = Series([4, 7, -3, 2])
+    print(obj.order()) # 按值对Series进行排序
+
+    obj = Series([4, np.nan, 7, np.nan, -3, 2])
+    print(obj.order())
+
+    # DataFrame
+    frame = DataFrame(np.arange(8).reshape((2, 4)),
+                      index=['three', 'one'],
+                      columns=['d', 'a', 'b', 'c'])
+    print(frame.sort_index())  # 按行索引排序
+    print(frame.sort_index(axis=1)) # 按列索引排序
+    print(frame.sort_index(axis=1, ascending=False)) # 按列索引降序排列
+
+    frame = DataFrame({'b':[4, 7, -3, 2], 'a':[0, 1, 0, 1]})
+    print(frame)
+    print(frame.sort_index(by='b')) # 对DataFrame的列元素进行排序
+    print(frame.sort_index(by=['a', 'b']))
+
+    # 排名
+    # Series
+    obj = Series([7, -5, 7, 4, 2, 0, 4])
+    print(obj.rank())
+    print(obj.rank(method='first'))
+    print(obj.rank(method='max', ascending=False))
+
+    # DataFrame
+    frame = DataFrame({'b':[4.3, 7, -3, 2],
+                       'a':[0, 1, 0, 1],
+                       'c':[-2, 5, 8, -2.5]})
+    print(frame)
+    print(frame.rank(axis=1))
+    print(frame.rank(axis=0))
+
+    ## 带有重复制的抽索引
+    # Series
+    obj = Series(range(5), index=['a', 'a', 'b', 'b', 'c'])
+    print(obj)
+    print(obj.index.is_unique)
+    print(obj['a'])
+    print(obj['c'])
+
+    # DataFrame
+    df = DataFrame(np.random.randn(4, 3),
+                   index=['a', 'a', 'b', 'b'])
+    print(df)
+    print(df.ix['b'])
