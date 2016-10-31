@@ -120,3 +120,27 @@ if __name__ == '__main__':
     # 将值限制在区间-3到3之间
     data[np.abs(data)>3] = np.sign(data)*3
     print(data.describe())
+
+    ## 排列和随机采样
+    df = DataFrame(np.arange(5*4).reshape(5, 4))
+    sampler = np.random.permutation(5)
+    print(df)
+    print(sampler)
+    print(df.take(sampler))
+
+    print(df.take(np.random.permutation(len(df))[:3]))
+
+    bag  =np.array([5, 7, -1, 6, 4])
+    sampler = np.random.randint(0, len(bag), size=10)
+    print(sampler)
+    print(bag.take(sampler))
+
+    ## 计算指标或哑变量
+    df = DataFrame({'key': ['b', 'b', 'a', 'c', 'a', 'b'],
+                    'data1': range(6)})
+    print(df)
+    print(pd.get_dummies(df['key']))
+
+    dummies = pd.get_dummies(df['key'], prefix='key')
+    print(dummies)
+    print(df[['data1']].join(dummies))
