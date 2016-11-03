@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from datetime import datetime
+from io import StringIO
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -19,3 +20,12 @@ if __name__ == '__main__':
     ax.add_patch(pgon)
 
     plt.show()
+
+
+    ## 将图标保存到文件
+    plt.savefig('./data/figpath.svg')
+
+    # savefig并非一定要写入磁盘，也可以写入任何文件型的对象
+    buffer = StringIO()
+    plt.savefig(buffer)
+    plot_data = buffer.getvalue()
