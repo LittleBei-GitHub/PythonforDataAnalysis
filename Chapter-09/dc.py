@@ -56,3 +56,7 @@ if __name__ == '__main__':
     print(grouped.agg({'tip': [('aggmax', np.max)], 'size': [('aggsum', 'sum')]}))  # 加个列明
     print(grouped.agg({'tip_pct': ['min', 'max', 'mean', 'std'],
                        'size': 'sum'}))
+
+    # 以‘无索引’的形式返回聚合数据
+    print(tips.groupby(['sex', 'smoker']).mean())
+    print(tips.groupby(['sex', 'smoker'], as_index=False).mean())
