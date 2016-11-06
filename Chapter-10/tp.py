@@ -23,3 +23,4 @@ if __name__ == '__main__':
     p = pd.Period('2007', freq='A-DEC')
     print(p.asfreq('M', how='start'))
     print(p.asfreq('M', how='end'))
+    print('--------------------')
