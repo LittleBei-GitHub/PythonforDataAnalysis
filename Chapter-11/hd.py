@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from pandas import DataFrame, Series
+from datetime import time
 import pandas as pd
 import numpy as np
 
@@ -38,3 +39,31 @@ if __name__ == '__main__':
     print(infl)
     infl_q = infl.asfreq('Q-SEP', how='end').reindex(gdp.index, method='ffill')
     print(infl_q)
+
+    ## 时间和最当前数据选取
+    rng = pd.date_range('2012-06-01 09:30', '2012-06-01 15:39', freq='T')
+    rng = rng.append([rng + pd.offsets.BDay(i) for i in range(1, 4)])
+    ts = Series(np.arange(len(rng), dtype=float), index=rng)
+    print(ts)
+
+    # 抽取特定时间点上的值
+    print(ts[time(10, 0)])
+    print(ts.at_time(time(10, 0)))
+
+    # 抽取某个时间段上的点
+    print(ts.between_time(time(10, 0), time(10, 1)))
+
+    # 抽取某个时间点之前最后出现的那个值
+    indexer = np.sort(np.random.permutation(len(ts))[700:])
+    irr_ts = ts.copy()
+    irr_ts[indexer] = np.nan
+    print(irr_ts['2012-06-01 09:50' : '2012-06-01 10:00'])
+    selection = pd.date_range('2012-06-01 10:00', periods=4, freq='B')
+    print(selection)
+    print(irr_ts.asof(selection))
+
+    ## 拼接多个数据源
+    # 使用concat连接
+    data1 = DataFrame(np.ones((6, 3), dtpye=float),
+                      columns=['a', 'b', 'c'],
+                      index=pd.date_range('6/12/2012', periods=6))
