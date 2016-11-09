@@ -5,6 +5,7 @@ from datetime import time
 import pandas as pd
 import numpy as np
 import pandas.io.data as web
+
 if __name__ == '__main__':
     ## 数据规整
     s1 = Series(range(3), index=['a', 'b', 'c'])
