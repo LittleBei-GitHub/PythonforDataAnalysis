@@ -4,7 +4,7 @@ from pandas import DataFrame, Series
 from datetime import time
 import pandas as pd
 import numpy as np
-
+import pandas.io.data as web
 if __name__ == '__main__':
     ## 数据规整
     s1 = Series(range(3), index=['a', 'b', 'c'])
@@ -64,6 +64,39 @@ if __name__ == '__main__':
 
     ## 拼接多个数据源
     # 使用concat连接
-    data1 = DataFrame(np.ones((6, 3), dtpye=float),
+    data1 = DataFrame(np.ones((6, 3), dtype=float),
                       columns=['a', 'b', 'c'],
                       index=pd.date_range('6/12/2012', periods=6))
+    data2 = DataFrame(np.ones((6, 3), dtype=float),
+                      columns=['a', 'b', 'c'],
+                      index=pd.date_range('6/12/2012', periods=6))
+    print(data1)
+    print(data2)
+
+    spliced = pd.concat([data1.ix[:'2012-06-14'], data2.ix['2012-06-15':]])
+    print(spliced)
+
+    data2 = DataFrame(np.ones((6, 4), dtype=float)*2,
+                      columns=['a', 'b', 'c', 'd'],
+                      index=pd.date_range('6/13/2012', periods=6))
+    spliced = pd.concat([data1.ix[:'2012-06-14'], data2.ix['2012-06-15':]])
+    print(spliced)
+
+    # combine_first引入合并点之前的数据
+    # 由于data2没有关于2012-06-12的数据，所以那一天被填空
+    spliced_filled = spliced.combine_first(data2)
+    print(spliced_filled)
+
+    # DataFrame的update方法，也可以实现就地更新
+    # 如果只想填充空洞，则必须传入overwrite=False
+    spliced.update(data2, overwrite=False)
+    print(spliced)
+
+    # 利用DataFrame的索引机制
+    cp_spliced = spliced.copy()
+    cp_spliced[['a', 'c']] = data1[['a', 'c']]
+    print(cp_spliced)
+
+    ## 收益指数和累积收益
+    price = web.get_data_yahoo('AAPL', '2011-01-01')['Adj Close']
+    print(price[-5:])
