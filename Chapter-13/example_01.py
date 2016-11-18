@@ -12,19 +12,11 @@ if __name__ == '__main__':
 
     ## 数据合并
     df = pd.merge(df1[['F', 'T', 'Num']], df2, left_on='T', right_on='Country')
+    print('数据合并：')
     print(df.head())
+    print(df[df['Continent']=='Asia'])
 
     ## 数据分析
-    # United States
-    df_UnitedStates = df[df['F']=='United States'].groupby('Continent')['Num'].sum()
-    print('From United States to Continent:')
-    print(df_UnitedStates)
-
-    # Canada
-    df_Canada = df[df['F'] == 'Canada'].groupby('Continent')['Num'].sum()
-    print('From Canada to Continent:')
-    print(df_Canada)
-
     # Mongolia
     df_Mongolia = df[df['F'] == 'Mongolia'].groupby('Continent')['Num'].sum()
     print('From Mongolia to Continent:')
@@ -35,17 +27,32 @@ if __name__ == '__main__':
     print('From China to Continent:')
     print(df_China)
 
-    # Australia
-    df_Australia = df[df['F'] == 'Australia'].groupby('Continent')['Num'].sum()
-    print('From Australia to Continent:')
-    print(df_Australia)
-
-    # New Zealand
-    df_NewZealand = df[df['F'] == 'New Zealand'].groupby('Continent')['Num'].sum()
-    print('From New Zealand to Continent:')
-    print(df_NewZealand)
-
     # Russia
     df_Russia = df[df['F'] == 'Russia'].groupby('Continent')['Num'].sum()
     print('From Russia to Continent:')
     print(df_Russia)
+
+    ## 数据合并
+    df = pd.merge(df1[['F', 'T', 'Num']], df2, left_on='F', right_on='Country')
+    print('数据合并：')
+    print(df.head())
+
+    # United States
+    df_UnitedStates = df[df['T'] == 'United States'].groupby('Continent')['Num'].sum()
+    print('From Continent to United States:')
+    print(df_UnitedStates)
+
+    # Canada
+    df_Canada = df[df['T'] == 'Canada'].groupby('Continent')['Num'].sum()
+    print('From Continent to Canada:')
+    print(df_Canada)
+
+    # Australia
+    df_Australia = df[df['T'] == 'Australia'].groupby('Continent')['Num'].sum()
+    print('From Continent to Australia:')
+    print(df_Australia)
+
+    # New Zealand
+    df_NewZealand = df[df['T'] == 'New Zealand'].groupby('Continent')['Num'].sum()
+    print('From Continent to New Zealand:')
+    print(df_NewZealand)
