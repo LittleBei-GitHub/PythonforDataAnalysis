@@ -56,3 +56,10 @@ if __name__ == '__main__':
     df_NewZealand = df[df['T'] == 'New Zealand'].groupby('Continent')['Num'].sum()
     print('From Continent to New Zealand:')
     print(df_NewZealand)
+
+    ## Continent to Continent
+    df = pd.merge(df1[['F', 'T', 'Num']], df2, left_on='F', right_on='Country')
+    df = pd.merge(df[['F', 'T', 'Num', 'Continent']], df2, left_on='T', right_on='Country')
+    print('数据合并：')
+    print(df.head())
+    df.to_csv('./data/c_to_c.csv')
